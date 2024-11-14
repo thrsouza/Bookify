@@ -24,24 +24,24 @@ public class Result
     public static Result Success() => new(true, Error.None);
     public static Result Failure(Error error) => new(false, error);
     
-    public static Result<T> Success<T>(T value) => new(value, true, Error.None);
-    public static Result<T> Failure<T>(Error error) => new(default!, false, error);
+    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
+    public static Result<TValue> Failure<TValue>(Error error) => new(default!, false, error);
     
-    public static Result<T> Create<T>(T value) => 
-        value is not null ? Success(value) : Failure<T>(Error.NullValue);
+    public static Result<TValue> Create<TValue>(TValue value) => 
+        value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
 }
 
-public class Result<T> : Result
+public class Result<TValue> : Result
 {
-    private readonly T? _value;
+    private readonly TValue? _value;
 
-    protected internal Result(T value, bool isSuccess, Error error)
+    protected internal Result(TValue value, bool isSuccess, Error error)
         : base(isSuccess, error)
     {
         _value = value;
     }
     
-    public T? Value => IsSuccess ? _value : throw new InvalidOperationException("The value of failure result can not be accessed");
+    public TValue? Value => IsSuccess ? _value : throw new InvalidOperationException("The value of failure result can not be accessed");
     
-    public static implicit operator Result<T>(T value) => Create(value);
+    public static implicit operator Result<TValue>(TValue value) => Create(value);
 }
