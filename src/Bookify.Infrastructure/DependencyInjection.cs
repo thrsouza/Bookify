@@ -28,7 +28,7 @@ public static class DependencyInjection
 
         services.AddDbContext<BookifyDbContext>(builder =>
         {
-            builder.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+            builder.UseNpgsql(connectionString);
         });
         
         services.AddScoped<IUserRepository, UserRepository>();
