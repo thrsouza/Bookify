@@ -12,11 +12,6 @@ public sealed record Rating
 
     public static Result<Rating> Create(int value)
     {
-        if (value < 1 || value > 5)
-        {
-            return Result.Failure<Rating>(Invalid);
-        }
-
-        return new Rating(value);
+        return value is < 1 or > 5 ? Result.Failure<Rating>(Invalid) : new Rating(value);
     }
 }
